@@ -1,4 +1,3 @@
-//Sapnu
 'use strict';
 
 const BACKSPACE_KEY = 'Backspace';
@@ -12,7 +11,7 @@ const WORD_LIST = [
   'LOURENE', 'MILZETH', 'CORDERO', 'ESTACIO','ELLJANE', 'MARYLLE', 'JASMINE', 'CABRERA',
   'ARELLANO', 'GERICKO',
   'ANTHONETTE',
-];//Sapnu
+];
 
 //Jan
 let WORD_OF_THE_DAY = WORD_LIST[getRandomIndex(WORD_LIST.length)];
@@ -27,10 +26,9 @@ const KEYBOARD_KEYS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
 
 // Grab the gameboard and the keyboard
 const gameBoard = document.querySelector('#board');
-const keyboard = document.querySelector('#keyboard'); // Jan
+const keyboard = document.querySelector('#keyboard');
 
 // Setup event listeners
-//Sapnu
 document.addEventListener('keydown', event => onKeyDown(event.key));
 gameBoard.addEventListener('animationend', event => event.target.setAttribute('data-animation', 'idle'));
 keyboard.addEventListener('click', onKeyboardButtonClick);
@@ -42,10 +40,8 @@ const init = () => {
   // Generate the gameboard and the keyboard
   generateBoard(gameBoard, WORD_OF_THE_DAY.length, MAX_NUMBER_OF_ATTEMPTS);
   generateBoard(keyboard, 3, 5, KEYBOARD_KEYS, true); 
-}//Sapnu
+}
 
-
-//Jan
 const showMessage = (message) => {
   const toast = document.createElement('li');
 
@@ -67,9 +63,8 @@ const restartGame = () => {
   WORD_OF_THE_DAY = WORD_LIST[getRandomIndex(WORD_LIST.length)]; 
   generateBoard(gameBoard, WORD_OF_THE_DAY.length, MAX_NUMBER_OF_ATTEMPTS); 
   generateBoard(keyboard, 3, 5, KEYBOARD_KEYS, true);
-}//Jan
+}
 
-//Sapnu
 const checkGuess = (guess, word) => {
   const guessLetters = guess.split('');
   const wordLetters = word.split('');
@@ -87,12 +82,10 @@ const checkGuess = (guess, word) => {
     // Each letter should start its animation twice as late as the letter before it
     element.style.animationDelay = `${index * 300}ms`;
     element.style.transitionDelay = `${index * 400}ms`;
-  }); //Sapnu
-
+  }); 
 
   // Second iteration finds all the valid letters
   // and creates a list of leftover letters
-  //Jan
   wordLetters.forEach((letter, index) => {
     if (guessLetters[index] === letter) {
       currentRow.querySelector(`li:nth-child(${index + 1})`)
@@ -108,10 +101,8 @@ const checkGuess = (guess, word) => {
       remainingWordLetters.push(letter);
       remainingGuessLetters.push(guessLetters[index]);
     }
-  });//Jan
+  });
 
-
-  //Sapnu
   // Third iteration finds all the misplaced letters
   remainingWordLetters.forEach(letter => {
     // Skip this iteration, since the letter
@@ -130,10 +121,8 @@ const checkGuess = (guess, word) => {
         keyboardKey.setAttribute('data-status', 'misplaced');
       }
     }
-  });//Sapnu
+  });
 
-
-  //Jan
   // Fourth iteration finds all the letters on the keyboard
   // that are absent from the word.
   guessLetters.forEach(letter => {
@@ -142,9 +131,8 @@ const checkGuess = (guess, word) => {
     if (keyboardKey.getAttribute('data-status') === 'empty') {
       keyboardKey.setAttribute('data-status', 'absent');
     }
-  });//Jan
-
-  //Sapnu
+  });
+  
   history.push(currentWord);
   currentWord = '';
 
@@ -155,9 +143,8 @@ const checkGuess = (guess, word) => {
     showMessage('You have reached the maximum number of attempts. The game will restart.');
     setTimeout(restartGame, 2000);
   }
-}//Sapnu
+}
 
-//Jan
 function onKeyboardButtonClick (event) {
   if (event.target.nodeName === 'LI') {
     onKeyDown(event.target.getAttribute('data-key'));
@@ -192,9 +179,8 @@ function onKeyDown (key) {
     currentWord = currentWord.slice(0, -1);
     
     return;
-  }//Jan
+  }
 
-  //Sapnu
   if (key === ENTER_KEY) { 
     // Check if the current word length is less than the word of the day length
     if (currentWord.length < WORD_OF_THE_DAY.length) {
@@ -214,9 +200,8 @@ function onKeyDown (key) {
       showMessage('That\'s not even a real word, is it?');
     }
     return;
-  }//Sapnu
+  }
 
-  //Adrielle
   // Check if the current word length has reached the word of the day length
   if (currentWord.length >= WORD_OF_THE_DAY.length) return;
 
@@ -287,4 +272,3 @@ document.addEventListener('DOMContentLoaded', init);
 function getRandomIndex (maxLength) {
   return Math.floor(Math.random() * Math.floor(maxLength));
 }
-//Adrielle
